@@ -20,5 +20,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', views.hello_world),
+    path('apiTest/', views.api_test_view, name='apiTest'),
 ]
 
