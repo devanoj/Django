@@ -23,5 +23,6 @@ urlpatterns = [
     path('apiTest/', views.api_test_view, name='apiTest'),
     path('firebase/', views.get_firebase_data, name='firebase'),
     path('loginapp/', include('loginapp.urls')),
+    path('chat/', include('chat.urls')),
 ]
 

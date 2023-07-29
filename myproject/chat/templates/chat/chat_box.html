@@ -1,0 +1,31 @@
+<!-- chat_box.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Box</title>
+</head>
+<body>
+    <h1>Welcome to the Chat Box!</h1>
+    <div id="message-container">
+        <!-- Chat messages will be displayed here -->
+        <div>Sample message 1</div>
+        <div>Sample message 2</div>
+    </div>
+    <input type="text" id="message-input" placeholder="Type your message here...">
+    <button id="send-button">Send</button>
+
+    <!-- JavaScript for sending and receiving chat messages (you can enhance this with WebSocket for real-time chat) -->
+    <script>
+        document.getElementById("send-button").addEventListener("click", function() {
+            var message = document.getElementById("message-input").value;
+            if (message.trim() !== "") {
+                var messageElement = document.createElement('div');
+                messageElement.textContent = message;
+                document.getElementById('message-container').appendChild(messageElement);
+                document.getElementById("message-input").value = "";
+            }
+        });
+    </script>
+</body>
+</html>

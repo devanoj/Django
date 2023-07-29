@@ -16,7 +16,7 @@ def login_view(request):
             user = auth.get_user_by_email(email)
             
             # If there is no exception raised, the user exists and authentication succeeded
-            username = user.display_name
+            username = email
             return redirect('login_success', username=username)
         except auth.AuthError as e:
             # Handle authentication failure
@@ -27,6 +27,10 @@ def login_view(request):
 
 def success_view(request, username):
     return render(request, 'loginapp/success.html', {'username': username})
+
+def settings_view(request):
+    # Your settings view logic goes here
+    return render(request, 'loginapp/settings.html')
 
 def signup_view(request):
     error_message = None
@@ -48,6 +52,5 @@ def signup_view(request):
     return render(request, 'loginapp/signup.html', {'error_message': error_message})
 
 
-def success_view(request, username):
-    return render(request, 'loginapp/success.html', {'username': username})
+
 

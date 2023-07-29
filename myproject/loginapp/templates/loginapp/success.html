@@ -1,11 +1,17 @@
+<!-- success.html -->
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login Successful</title>
 </head>
 <body>
-    <h1>Login Successful</h1>
-    <p>Welcome, {{ username }}!</p>
+    <h1>Welcome, {{ username }}!</h1>
+    <p>You have successfully logged in.</p>
 
+    <a href="{% url 'settings' %}">Settings</a>
+
+
+    <a href="{% url 'chat_box' %}">Chat</a>
 </body>
 </html>
