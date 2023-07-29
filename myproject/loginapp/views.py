@@ -7,24 +7,26 @@ from django.shortcuts import render, redirect
 
 
 def login_view(request):
-    # Set is_login_successful to False by default
-    is_login_successful = False
-
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('username')  # Use 'email' instead of 'username' for Firebase
         password = request.POST.get('password')
 
-        if username == "admin":
-            is_login_successful = True
+        try:
+            # Authenticate the user with Firebase
+            user = auth.get_user_by_email(email)
+            
+            # If there is no exception raised, the user exists and authentication succeeded
+            username = user.display_name
+            return redirect('login_success', username=username)
+        except auth.AuthError as e:
+            # Handle authentication failure
+            print('Authentication error:', str(e))
 
-    if is_login_successful:
-        # Redirect to the success page with the username as a parameter
-        return redirect('login_success', username=username)
-    else:
-        # Handle failed login (e.g., display an error message)
-        return render(request, 'loginapp/login.html', {'error_message': 'Invalid credentials'})
+    # Handle failed login (e.g., display an error message)
+    return render(request, 'loginapp/login.html', {'error_message': 'Invalid credentials'})
 
-    return render(request, 'loginapp/login.html')
+def success_view(request, username):
+    return render(request, 'loginapp/success.html', {'username': username})
 
 def signup_view(request):
     error_message = None
