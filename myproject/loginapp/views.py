@@ -1,14 +1,10 @@
 from django.shortcuts import render
-
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import auth
-
 from django.shortcuts import render, redirect
 
-# loginapp/views.py
 
-from django.shortcuts import render, redirect
 
 def login_view(request):
     # Set is_login_successful to False by default
@@ -30,17 +26,24 @@ def login_view(request):
 
     return render(request, 'loginapp/login.html')
 
-
-
-
-
 def signup_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        
+    error_message = None
     
-    return render(request, 'loginapp/signup.html')
+    if request.method == 'POST':
+        email = request.POST.get('username')  # Use 'email' instead of 'username' for Firebase
+        password = request.POST.get('password')
+
+        try:
+            # Create the user in Firebase
+            user = auth.create_user(email=email, password=password)
+            return redirect('login')
+            # User created successfully
+        except Exception as e:
+            # Handle any other exception that might occur during the signup process
+            error_message = 'An error occurred during signup. Please try again.'
+
+        
+    return render(request, 'loginapp/signup.html', {'error_message': error_message})
 
 
 def success_view(request, username):

@@ -6,8 +6,8 @@
 <body>
     <h1>Sign Up Page</h1>
     {% if error_message %}
-        <p>{{ error_message }}</p>
-    {% endif %}
+    <p style="color: red;">{{ error_message }}</p>
+{% endif %}
     <form method="post">
         {% csrf_token %}
         <label for="username">Username:</label>
