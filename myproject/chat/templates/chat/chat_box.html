@@ -1,12 +1,14 @@
 <!-- chat_box.html -->
+{% load static %}
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Chat Box</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'chat_box.css' %}">
 </head>
 <body>
-    <h1>Welcome to the Chat Box!</h1>
+    <h1>Welcome to the Global Chat Box!</h1>
     <div id="message-container">
         <!-- Chat messages will be displayed here -->
         {% for message in chat_messages %}
