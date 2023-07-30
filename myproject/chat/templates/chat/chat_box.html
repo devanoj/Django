@@ -9,23 +9,14 @@
     <h1>Welcome to the Chat Box!</h1>
     <div id="message-container">
         <!-- Chat messages will be displayed here -->
-        <div>Sample message 1</div>
-        <div>Sample message 2</div>
+        {% for message in chat_messages %}
+        <div>{{ message }}</div>
+        {% endfor %}
     </div>
-    <input type="text" id="message-input" placeholder="Type your message here...">
-    <button id="send-button">Send</button>
-
-    <!-- JavaScript for sending and receiving chat messages (you can enhance this with WebSocket for real-time chat) -->
-    <script>
-        document.getElementById("send-button").addEventListener("click", function() {
-            var message = document.getElementById("message-input").value;
-            if (message.trim() !== "") {
-                var messageElement = document.createElement('div');
-                messageElement.textContent = message;
-                document.getElementById('message-container').appendChild(messageElement);
-                document.getElementById("message-input").value = "";
-            }
-        });
-    </script>
+    <form method="post" action="{% url 'chat_box' %}">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type your message here...">
+        <button type="submit">Send</button>
+    </form>
 </body>
 </html>
