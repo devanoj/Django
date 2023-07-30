@@ -14,9 +14,12 @@ def login_view(request):
         try:
             # Authenticate the user with Firebase
             user = auth.get_user_by_email(email)
+            print('Successfully fetched user data: {0}'.format(user.uid))
+            
             
             # If there is no exception raised, the user exists and authentication succeeded
             username = email
+            
             return redirect('login_success', username=username)
         except auth.AuthError as e:
             # Handle authentication failure
