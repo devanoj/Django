@@ -15,11 +15,13 @@ def login_view(request):
             # Authenticate the user with Firebase
             user = auth.get_user_by_email(email)
             print('Successfully fetched user data: {0}'.format(user.uid))
-            
-            
+
             # If there is no exception raised, the user exists and authentication succeeded
             username = email
-            
+
+            # Store the user's email in the session
+            request.session['email'] = email
+
             return redirect('login_success', username=username)
         except auth.AuthError as e:
             # Handle authentication failure
@@ -27,6 +29,7 @@ def login_view(request):
 
     # Handle failed login (e.g., display an error message)
     return render(request, 'loginapp/login.html', {'error_message': 'Invalid credentials'})
+
 
 def success_view(request, username):
     return render(request, 'loginapp/success.html', {'username': username})

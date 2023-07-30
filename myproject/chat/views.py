@@ -1,17 +1,18 @@
-# chat/views.py
-import firebase_admin
-from firebase_admin import credentials, db
 from django.shortcuts import render
+from firebase_admin import db, auth
 
 def chat_box_view(request):
     if request.method == 'POST':
         message = request.POST.get('message', '')
-        if message.strip():
+        user = auth.get_user_by_email(request.session['email'])
+        uid = user.uid
+        if message.strip() and uid:
             # Save the chat message to Firebase Realtime Database
             messages_ref = db.reference('chat_messages')
             new_message_ref = messages_ref.push()
             new_message_ref.set({
-                'content': message
+                'content': message,
+                'uid': uid  # include the uid when you push a new message
             })
 
     # Fetch chat messages from Firebase
@@ -19,7 +20,7 @@ def chat_box_view(request):
     messages = messages_ref.get()
 
     # Convert Firebase response to a list of messages
-    chat_messages = [message['content'] for message in messages.values()] if messages else []
+    chat_messages = [{'content': message['content'], 'uid': message.get('uid', 'Unknown user')} for message in messages.values()] if messages else []
 
     context = {
         'chat_messages': chat_messages
