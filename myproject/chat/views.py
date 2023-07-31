@@ -1,5 +1,10 @@
 from django.shortcuts import render
 from firebase_admin import db, auth
+from gtts import gTTS
+from pygame import mixer
+import time
+from django.http import HttpResponse
+
 
 def chat_box_view(request):
     if request.method == 'POST':
@@ -27,3 +32,29 @@ def chat_box_view(request):
     }
 
     return render(request, 'chat/chat_box.html', context)
+
+
+def create_text_v(request): 
+    # your text you want to convert to audio
+    my_text = "Hello, I am your Text-to-Speech service."
+
+    # convert text to speech
+    language = 'en'  # English
+    my_obj = gTTS(text=my_text, lang=language, slow=False)
+
+    # save the converted audio to a file
+    audio_file = "welcome.mp3"
+    my_obj.save(audio_file)
+
+    # initialize the mixer
+    mixer.init()
+
+    # load the file and play it
+    mixer.music.load(audio_file)
+    mixer.music.play()
+
+    # wait for the audio to finish playing
+    while mixer.music.get_busy():
+        time.sleep(1)
+
+    return HttpResponse("Audio has started playing.")
