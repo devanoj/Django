@@ -33,6 +33,12 @@ def chat_box_view(request):
 
     return render(request, 'chat/chat_box.html', context)
 
+def button_click_view(request):
+    print("Hello World")  
+    user1 = auth.get_user_by_email(request.session['email'])
+    uid = user1.uid
+    print(uid)
+    return HttpResponse("Clicked") 
 
 def create_text_v(request): 
     # your text you want to convert to audio

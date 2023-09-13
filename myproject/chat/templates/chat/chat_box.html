@@ -21,7 +21,10 @@
         <button type="submit">Send</button>
     </form>
     
-    <button>Go back</button>
-    <input type="Go Back" value="Go Back">
+    <form method="get" action="{% url 'button_click' %}">
+        {% csrf_token %}
+        <button type="submit">Button Click</button>
+    </form>
+
 </body>
 </html>
