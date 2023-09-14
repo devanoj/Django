@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from firebase_admin import db, auth
 from gtts import gTTS
 from pygame import mixer
@@ -38,7 +38,8 @@ def button_click_view(request):
     user1 = auth.get_user_by_email(request.session['email'])
     uid = user1.uid
     print(uid)
-    return HttpResponse("Clicked") 
+    print(user1.email)
+    return redirect('login_success', username=user1.email)
 
 def create_text_v(request): 
     # your text you want to convert to audio
