@@ -9,4 +9,5 @@ urlpatterns = [
     path('success/<str:username>/', views.success_view, name='login_success'),  
     path('settings/', views.settings_view, name='settings'),
     path('chat/', include('chat.urls')),
+    path('addFriends/', include('friends.urls')),
 ]
