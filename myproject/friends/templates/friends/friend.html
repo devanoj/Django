@@ -7,7 +7,8 @@
 
   <h1>Add Contacts</h1>
 
-  <form action="/submit" method="POST">
+  <form action="{% url 'submit_friend' %}" method="POST">
+    {% csrf_token %}
     <label for="firstName">First Name:</label>
     <input type="text" id="firstName" name="firstName" required>
     <br><br>
@@ -22,7 +23,7 @@
 
     <input type="submit" value="Add Picture"><br><br><br><br>
 
-    <input type="submit" value="Submit">
+    <button type="submit">Submit</button>
   </form>
 
 </body>
