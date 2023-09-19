@@ -1,7 +1,7 @@
 from django.shortcuts import render
 import firebase_admin
 from firebase_admin import credentials
-from firebase_admin import auth
+from firebase_admin import auth, db
 from django.shortcuts import render, redirect
 
 
@@ -51,10 +51,23 @@ def signup_view(request):
         try:
             # Create the user in Firebase
             user = auth.create_user(email=email, password=password)
+            print(user.uid)
+
+           
+            user_id = user.uid  # Get user ID (uid) from Firebase
+            print(f"Successfully created new user: {user_id}")
+
+            
+            root = db.reference()  # Push this new user ID to Firebase Realtime Database
+            root.child('users').child(user_id).set({
+                'email': email,
+                'password': password,  # Storing passwords like this is insecure. This is just for demonstration.
+                'friends': ["test1", "test2"]
+            })
+
             return redirect('login')
-            # User created successfully
+        
         except Exception as e:
-            # Handle any other exception that might occur during the signup process
             error_message = 'An error occurred during signup. Please try again.'
 
         

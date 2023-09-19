@@ -10,11 +10,8 @@ def submitFriends(request):
         first_name = request.POST.get('firstName')
         last_name = request.POST.get('lastName')
         email = request.POST.get('email')
-
-        # Your code for adding friends here
-        # For now, we're printing the submitted data
         print(f"{first_name} {last_name} {email}")
 
         user1 = auth.get_user_by_email(request.session['email'])
-        
+
         return redirect('login_success', username=user1.email)
