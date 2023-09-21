@@ -34,17 +34,19 @@ def login_view(request):
     return render(request, 'loginapp/login.html', {'error_message': 'Invalid credentials'})
 
 
-
 def success_view(request, username):
     user1 = auth.get_user_by_email(request.session['email'])
     uid = user1.uid
     messages_ref = db.reference('users').child(uid).child("friends")
-    messages = messages_ref.get()
+    messages = messages_ref.get() or {}
+
+    # Extracting only the values (emails) from the messages
+    emails = list(messages.values())
 
     # Define a context dictionary to hold your variables
     context = {
         'username': username,
-        'messages': messages
+        'emails': emails  # Passing only the email values to the context
     }
 
     # Pass the context dictionary to the render function
