@@ -34,7 +34,10 @@ def chat_box_view(request):
     return render(request, 'chat/chat_box.html', context)
 
 
+def email_view(request, email):
+    print("Hello World!")
 
+    return render(request, 'chat/email_page.html', {'email': email})
 
 
 

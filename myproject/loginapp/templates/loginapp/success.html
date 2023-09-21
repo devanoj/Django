@@ -17,9 +17,10 @@
     <a href="{% url 'add_contacts' %}">Add Friends</a>
 
     <p>All contacts:</p>
+
     <ul>
         {% for email in emails %}
-            <li>{{ email }}</li>
+            <li><a href="{% url 'email_view' email=email %}">{{ email }}</a></li>
         {% endfor %}
     </ul>
 </body>

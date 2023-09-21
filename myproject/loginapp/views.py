@@ -56,8 +56,7 @@ def settings_view(request):
     # Your settings view logic goes here
     return render(request, 'loginapp/settings.html')
 
-def friends_view(request):
-    return render(request, )
+
 
 def signup_view(request):
     error_message = None
