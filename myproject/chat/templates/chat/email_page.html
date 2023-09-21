@@ -1,1 +1,14 @@
-<h2>Hello Email</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Chat Box</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'email_view' email=email %}">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type a message...">
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>

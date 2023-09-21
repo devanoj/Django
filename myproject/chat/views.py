@@ -35,11 +35,20 @@ def chat_box_view(request):
 
 
 def email_view(request, email):
-    print("Hello World!")
-
+    if request.method == 'POST':
+        message = request.POST.get('message')
+        user = auth.get_user_by_email(request.session['email'])
+        uid = user.uid
+        
+        if message:
+            # Assume you have a user with UID and Firebase initialized
+            messages_ref = db.reference('users').child(uid).child('friends').child(email)
+            new_message_ref = messages_ref.push()
+            new_message_ref.set({'text': message})
+            
+        return redirect('email_view', email=email)  # Redirect back to the same page
+        
     return render(request, 'chat/email_page.html', {'email': email})
-
-
 
 
 def button_click_view(request):
