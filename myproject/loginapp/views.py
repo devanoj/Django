@@ -22,6 +22,9 @@ def login_view(request):
             # Store the user's email in the session
             request.session['email'] = email
 
+            
+
+
             return redirect('login_success', username=username)
         except auth.AuthError as e:
             # Handle authentication failure
@@ -31,8 +34,21 @@ def login_view(request):
     return render(request, 'loginapp/login.html', {'error_message': 'Invalid credentials'})
 
 
+
 def success_view(request, username):
-    return render(request, 'loginapp/success.html', {'username': username})
+    user1 = auth.get_user_by_email(request.session['email'])
+    uid = user1.uid
+    messages_ref = db.reference('users').child(uid).child("friends")
+    messages = messages_ref.get()
+
+    # Define a context dictionary to hold your variables
+    context = {
+        'username': username,
+        'messages': messages
+    }
+
+    # Pass the context dictionary to the render function
+    return render(request, 'loginapp/success.html', context)
 
 def settings_view(request):
     # Your settings view logic goes here

@@ -12,8 +12,11 @@
     <a href="{% url 'settings' %}">Settings</a>
 
 
-    <a href="{% url 'chat_box' %}">Chat</a>
+    <a href="{% url 'chat_box' %}">Global Chat</a>
 
     <a href="{% url 'add_contacts' %}">Add Friends</a>
+
+    <p>All contacts:</p>
+    <p>{{ messages }}</p>
 </body>
 </html>
