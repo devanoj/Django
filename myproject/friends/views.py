@@ -10,17 +10,18 @@ def submitFriends(request):
     if request.method == 'POST':
         first_name = request.POST.get('firstName')
         last_name = request.POST.get('lastName')
-        email = request.POST.get('email')
+        email = request.POST.get('email')  # Getting the email value
         print(f"{first_name} {last_name} {email}")
 
         user1 = auth.get_user_by_email(request.session['email'])
         uid = user1.uid
 
         root = db.reference()  # Push this new user ID to Firebase Realtime Database
-        root.child("users").child(uid).child("friends").push(email)
-
+        root.child("users").child(uid).child("friends").child(email).set({
+            '1': 'Type here',  # Replace with the actual value
+            '2': '...'   # Replace with the actual value
+        })        
         target_email = "00@gmail.com"
-
         uid = search_email(target_email)
         if uid:
             print(f"The unique ID for email {target_email} is {uid}")
@@ -28,8 +29,6 @@ def submitFriends(request):
             print(f"No user found with email {target_email}")
 
         return redirect('login_success', username=user1.email)
-    
-
 
 
 def search_email(target_email):

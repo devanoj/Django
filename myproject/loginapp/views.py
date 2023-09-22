@@ -37,20 +37,21 @@ def login_view(request):
 def success_view(request, username):
     user1 = auth.get_user_by_email(request.session['email'])
     uid = user1.uid
-    messages_ref = db.reference('users').child(uid).child("friends")
-    messages = messages_ref.get() or {}
-
-    # Extracting only the values (emails) from the messages
-    emails = list(messages.values())
-
+    friends_ref = db.reference('users').child(uid).child("friends")
+    friends = friends_ref.get() or {}
+    
+    # Extracting only the keys (emails) from the friends dictionary
+    emails = list(friends.keys())
+    
     # Define a context dictionary to hold your variables
     context = {
         'username': username,
-        'emails': emails  # Passing only the email values to the context
+        'emails': emails  # Passing only the email keys to the context
     }
 
     # Pass the context dictionary to the render function
     return render(request, 'loginapp/success.html', context)
+
 
 def settings_view(request):
     # Your settings view logic goes here
