@@ -5,6 +5,12 @@
     <title>Simple Chat Box</title>
 </head>
 <body>
+    <div id="message-container">
+        <!-- Chat messages will be displayed here -->
+        {% for message in chat_messages %}
+        <div>{{ message }}</div>
+        {% endfor %}
+    </div>
     <form method="POST" action="{% url 'email_view' email=email %}">
         {% csrf_token %}
         <input type="text" name="message" placeholder="Type a message...">

@@ -11,6 +11,7 @@ def chat_box_view(request):
         message = request.POST.get('message', '')
         user = auth.get_user_by_email(request.session['email'])
         uid = user.uid
+        print("UID from chatbox view" + uid)
         if message.strip() and uid:
             # Save the chat message to Firebase Realtime Database
             messages_ref = db.reference('chat_messages')
@@ -33,22 +34,28 @@ def chat_box_view(request):
 
     return render(request, 'chat/chat_box.html', context)
 
-
 def email_view(request, email):
+    context = {'email': email}  # Initializing context with 'email'
     if request.method == 'POST':
         message = request.POST.get('message')
         user = auth.get_user_by_email(request.session['email'])
         uid = user.uid
         
         if message:
-            # Assume you have a user with UID and Firebase initialized
             messages_ref = db.reference('users').child(uid).child('friends').child(email)
             new_message_ref = messages_ref.push()
             new_message_ref.set({'text': message})
-            
-        return redirect('email_view', email=email)  # Redirect back to the same page
         
-    return render(request, 'chat/email_page.html', {'email': email})
+        messages_ref1 = db.reference('users').child(uid).child('friends').child(email)
+        messages1 = messages_ref1.get()
+        chat_messages1 = [{'content': message['text'], 'uid': message.get('uid', 'Unknown user')} for message in messages1.values()] if messages1 else []
+        
+        # Updating the context dictionary with 'chat_messages'
+        context.update({'chat_messages': chat_messages1})
+        
+    return render(request, 'chat/email_page.html', context)
+
+
 
 
 def button_click_view(request):
