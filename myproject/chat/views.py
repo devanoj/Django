@@ -49,8 +49,8 @@ def email_view(request, email):
     
     messages_ref1 = db.reference('users').child(uid).child('friends').child(email)
     messages1 = messages_ref1.get()
-    chat_messages1 = [{'content': message['text'], 'uid': message.get('uid', 'Unknown user')} for message in messages1.values()] if messages1 else []
-    # Updating the context dictionary with 'chat_messages'
+    #chat_messages1 = [{'content': message['text'], 'uid': message.get('uid', 'Unknown user')} for message in messages1.values()] if messages1 else []
+    chat_messages1 = [{'content': message.get('text', 'Start Messaging'), 'uid': message.get('uid', 'Unknown user')} for message in messages1.values()] if messages1 else []
     context.update({'chat_messages': chat_messages1})
         
     return render(request, 'chat/email_page.html', context)

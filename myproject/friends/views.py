@@ -18,8 +18,9 @@ def submitFriends(request):
 
         root = db.reference()  # Push this new user ID to Firebase Realtime Database
         root.child("users").child(uid).child("friends").child(email).set({
-            '1': 'Type here',  # Replace with the actual value
-            '2': '...'   # Replace with the actual value
+            '-1': {
+                'message': 'Start messaging'
+            }
         })        
         target_email = "00@gmail.com"
         uid = search_email(target_email)
