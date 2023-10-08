@@ -8,5 +8,9 @@
 <body>
     <h1>Settings Page</h1>
     <!-- Your settings content here -->
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" value="logout1">Logout</button>
+    </form>
 </body>
 </html>

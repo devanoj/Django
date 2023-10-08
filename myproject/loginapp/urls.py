@@ -8,6 +8,7 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     path('success/<str:username>/', views.success_view, name='login_success'),  
     path('settings/', views.settings_view, name='settings'),
+    path('logout/', views.logout_view, name='logout'),
     path('chat/', include('chat.urls')),
     path('addFriends/', include('friends.urls')),
 ]

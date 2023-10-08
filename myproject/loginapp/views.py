@@ -3,8 +3,13 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import auth, db
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
+from django.urls import reverse, path, include
 
-
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('login')
 
 def login_view(request):
     if request.method == 'POST':
